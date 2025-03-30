@@ -12,11 +12,13 @@ import java.util.List;
 public class ManagementSystem {
     private final List<Appointment> appointments;
     private final List<Patient> patients;
+    private final List<Prescription> prescriptions;
 
     public ManagementSystem(List<Patient> list) {
         assert list != null : "Patient list cannot be null";
         appointments = new ArrayList<>();
         patients = list;
+        prescriptions = new ArrayList<>();
     }
 
     public List<Patient> getPatients() {
@@ -25,6 +27,15 @@ public class ManagementSystem {
 
     public List<Appointment> getAppointments() {
         return appointments;
+    }
+
+    /**
+     * Gets the list of prescriptions.
+     * 
+     * @return The list of prescriptions
+     */
+    public List<Prescription> getPrescriptions() {
+        return prescriptions;
     }
 
     public void addPatient(Patient patient) throws DuplicatePatientIDException, UnloadedStorageException {
@@ -255,6 +266,58 @@ public class ManagementSystem {
             }
         }
         return null;
+    }
+
+    /**
+     * Adds a prescription to the system.
+     *
+     * @param prescription The prescription to add
+     * @throws IllegalArgumentException if the patient doesn't exist
+     */
+    public void addPrescription(Prescription prescription) throws IllegalArgumentException {
+        assert prescription != null : "Prescription cannot be null";
+        
+        Patient patient = findPatientByNric(prescription.getPatientId());
+        if (patient == null) {
+            throw new IllegalArgumentException("Patient with NRIC: " + prescription.getPatientId() + " not found");
+        }
+        
+        prescriptions.add(prescription);
+    }
+
+    /**
+     * Finds a prescription by its ID.
+     *
+     * @param prescriptionId The ID of the prescription to find
+     * @return The found prescription or null if not found
+     */
+    public Prescription findPrescriptionById(String prescriptionId) {
+        assert prescriptionId != null && !prescriptionId.isBlank() : "Prescription ID cannot be null or blank";
+        
+        for (Prescription prescription : prescriptions) {
+            if (prescription.getId().equals(prescriptionId)) {
+                return prescription;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Gets all prescriptions for a specific patient.
+     *
+     * @param patientId The patient's ID
+     * @return List of prescriptions for the patient
+     */
+    public List<Prescription> getPrescriptionsForPatient(String patientId) {
+        assert patientId != null && !patientId.isBlank() : "Patient ID cannot be null or blank";
+        
+        List<Prescription> patientPrescriptions = new ArrayList<>();
+        for (Prescription prescription : prescriptions) {
+            if (prescription.getPatientId().equals(patientId)) {
+                patientPrescriptions.add(prescription);
+            }
+        }
+        return patientPrescriptions;
     }
 
 }

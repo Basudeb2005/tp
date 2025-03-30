@@ -18,6 +18,8 @@ import command.ViewMedHistoryCommand;
 import command.MarkApppointmentCommand;
 import command.UnmarkAppointmentCommand;
 import command.FindAppointmentCommand;
+import command.AddPrescriptionCommand;
+import command.ViewPrescriptionCommand;
 import exception.InvalidInputFormatException;
 import exception.UnknownCommandException;
 import manager.Appointment;
@@ -70,6 +72,10 @@ public class Parser {
             return new UnmarkAppointmentCommand(parseUnmarkAppointment(userInput));
         case "find-appointment":
             return new FindAppointmentCommand(parseFindAppointment(userInput));
+        case "add-prescription":
+            return new AddPrescriptionCommand(parseAddPrescription(userInput));
+        case "view-prescription":
+            return new ViewPrescriptionCommand(parseViewPrescription(userInput));
         default:
             throw new UnknownCommandException("Unknown command. Please try again.");
         }
@@ -251,7 +257,7 @@ public class Parser {
         int start = -1;
 
         // Find the first occurrence of the prefix that is either at the start or come before blank space
-        // Ensure checks are not done at where the prefix can’t fully fit
+        // Ensure checks are not done at where the prefix can't fully fit
         for (int i = 0; i <= lowerInput.length() - lowerPrefix.length(); i++) {
             boolean isParamPrefixMatch = lowerInput.startsWith(lowerPrefix, i);
             // Check if the character before the prefix is blank space in input to have a valid input format
@@ -345,6 +351,74 @@ public class Parser {
         List<String> medHistory = Arrays.asList(tokens[6].split(","));
 
         return new Patient(id, name, dob, gender, address, contact, medHistory);
+    }
+
+    /**
+     * Parses the input string for an add prescription command.
+     *
+     * @param input The input string
+     * @return String array containing [patientId, symptomsStr, medicinesStr, notes]
+     * @throws InvalidInputFormatException if the input format is invalid
+     */
+    private static String[] parseAddPrescription(String input) throws InvalidInputFormatException {
+        String temp = input.replaceFirst("(?i)add-prescription\\s*", "");
+        String patientId = extractValue(temp, "ic/");
+        String symptomsStr = extractValue(temp, "s/");
+        String medicinesStr = extractValue(temp, "m/");
+        String notes = extractValue(temp, "nt/");
+
+        if (patientId == null || symptomsStr == null || medicinesStr == null) {
+            throw new InvalidInputFormatException("Prescription details are incomplete!" + System.lineSeparator()
+                    + "Please use: add-prescription ic/NRIC s/SYMPTOMS m/MEDICINES [nt/NOTES]");
+        }
+
+        // If notes is null, set it to empty string
+        if (notes == null) {
+            notes = "";
+        }
+
+        // Parse symptoms and medicines
+        List<String> symptoms = new ArrayList<>();
+        String[] symptomArray = symptomsStr.split(",\\s*");
+        for (String symptom : symptomArray) {
+            if (!symptom.trim().isEmpty()) {
+                symptoms.add(symptom.trim());
+            }
+        }
+
+        List<String> medicines = new ArrayList<>();
+        String[] medicineArray = medicinesStr.split(",\\s*");
+        for (String medicine : medicineArray) {
+            if (!medicine.trim().isEmpty()) {
+                medicines.add(medicine.trim());
+            }
+        }
+
+        if (symptoms.isEmpty() || medicines.isEmpty()) {
+            throw new InvalidInputFormatException("Symptoms and medicines cannot be empty!");
+        }
+
+        return new String[]{patientId.trim(), String.join(",", symptoms), String.join(",", medicines), notes.trim()};
+    }
+
+    /**
+     * Parses the input string for a view prescription command.
+     *
+     * @param input The input string
+     * @return The prescription ID
+     * @throws InvalidInputFormatException if the input format is invalid
+     */
+    private static String parseViewPrescription(String input) throws InvalidInputFormatException {
+        if (input.length() < 18) {
+            throw new InvalidInputFormatException("Invalid command format. Use: view-prescription PRESCRIPTION_ID");
+        }
+
+        String prescriptionId = input.substring(18).trim();
+        if (prescriptionId.isEmpty()) {
+            throw new InvalidInputFormatException("Prescription ID cannot be empty!");
+        }
+        
+        return prescriptionId;
     }
 
 }
