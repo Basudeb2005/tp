@@ -50,6 +50,24 @@ public class Patient {
         return contactInfo;
     }
 
+    /**
+     * Gets the gender of the patient.
+     *
+     * @return The gender
+     */
+    public String getGender() {
+        return gender;
+    }
+
+    /**
+     * Gets the address of the patient.
+     *
+     * @return The address
+     */
+    public String getAddress() {
+        return address;
+    }
+
     public List<String> getMedicalHistory() {
         return medicalHistory;
     }

@@ -18,6 +18,9 @@ import command.ViewMedHistoryCommand;
 import command.MarkApppointmentCommand;
 import command.UnmarkAppointmentCommand;
 import command.FindAppointmentCommand;
+import command.AddPrescriptionCommand;
+import command.ViewPrescriptionCommand;
+import command.ViewAllPrescriptionsCommand;
 import exception.InvalidInputFormatException;
 import exception.UnknownCommandException;
 import manager.Appointment;
@@ -70,6 +73,12 @@ public class Parser {
             return new UnmarkAppointmentCommand(parseUnmarkAppointment(userInput));
         case "find-appointment":
             return new FindAppointmentCommand(parseFindAppointment(userInput));
+        case "add-prescription":
+            return new AddPrescriptionCommand(parseAddPrescription(userInput));
+        case "view-prescription":
+            return new ViewPrescriptionCommand(parseViewPrescription(userInput));
+        case "view-all-prescriptions":
+            return new ViewAllPrescriptionsCommand(parseViewAllPrescriptions(userInput));
         default:
             throw new UnknownCommandException("Unknown command. Please try again.");
         }
@@ -251,7 +260,7 @@ public class Parser {
         int start = -1;
 
         // Find the first occurrence of the prefix that is either at the start or come before blank space
-        // Ensure checks are not done at where the prefix can’t fully fit
+        // Ensure checks are not done at where the prefix can't fully fit
         for (int i = 0; i <= lowerInput.length() - lowerPrefix.length(); i++) {
             boolean isParamPrefixMatch = lowerInput.startsWith(lowerPrefix, i);
             // Check if the character before the prefix is blank space in input to have a valid input format
@@ -267,7 +276,8 @@ public class Parser {
         }
 
         start += prefix.length();
-        String[] possible = {"n/", "ic/", "dob/", "g/", "p/", "a/", "dt/", "t/", "dsc/", "h/", "old/", "new/"};
+        // Add prescription-specific prefixes s/, m/, and nt/ to the list of possible prefixes
+        String[] possible = {"n/", "ic/", "dob/", "g/", "p/", "a/", "dt/", "t/", "dsc/", "h/", "old/", "new/", "s/", "m/", "nt/"};
         int end = input.length();
 
         // Determine where the current parameter's detail ends by finding the start of the next parameter
@@ -374,5 +384,71 @@ public class Parser {
         }
     }
 
+
+    /**
+     * Parses the input string for an add prescription command.
+     *
+     * @param input The input string
+     * @return String array containing [patientId, symptomsStr, medicinesStr, notes]
+     * @throws InvalidInputFormatException if the input format is invalid
+     */
+    private static String[] parseAddPrescription(String input) throws InvalidInputFormatException {
+        String temp = input.replaceFirst("(?i)add-prescription\\s*", "");
+        String patientId = extractValue(temp, "ic/");
+        String symptomsStr = extractValue(temp, "s/");
+        String medicinesStr = extractValue(temp, "m/");
+        String notes = extractValue(temp, "nt/");
+
+        if (patientId == null || symptomsStr == null || medicinesStr == null) {
+            throw new InvalidInputFormatException("Prescription details are incomplete!" + System.lineSeparator()
+                    + "Please use: add-prescription ic/NRIC s/SYMPTOMS m/MEDICINES [nt/NOTES]");
+        }
+
+        // If notes is null, set it to empty string
+        if (notes == null) {
+            notes = "";
+        }
+
+        return new String[]{patientId.trim(), symptomsStr.trim(), medicinesStr.trim(), notes.trim()};
+    }
+
+    /**
+     * Parses the input string for a view prescription command.
+     *
+     * @param input The input string
+     * @return The prescription ID
+     * @throws InvalidInputFormatException if the input format is invalid
+     */
+    private static String parseViewPrescription(String input) throws InvalidInputFormatException {
+        if (input.length() < 18) {
+            throw new InvalidInputFormatException("Invalid command format. Use: view-prescription PRESCRIPTION_ID");
+        }
+
+        String prescriptionId = input.substring(18).trim();
+        if (prescriptionId.isEmpty()) {
+            throw new InvalidInputFormatException("Prescription ID cannot be empty!");
+        }
+        
+        return prescriptionId;
+    }
+
+    /**
+     * Parses the input string for viewing all prescriptions for a patient.
+     *
+     * @param input The input string
+     * @return The patient ID
+     * @throws InvalidInputFormatException if the input format is invalid
+     */
+    private static String parseViewAllPrescriptions(String input) throws InvalidInputFormatException {
+        String temp = input.replaceFirst("(?i)view-all-prescriptions\\s*", "");
+        String patientId = temp.trim();
+        
+        if (patientId.isEmpty()) {
+            throw new InvalidInputFormatException("Patient ID cannot be empty!" + System.lineSeparator()
+                    + "Please use: view-all-prescriptions PATIENT_NRIC");
+        }
+        
+        return patientId;
+    }
 
 }
