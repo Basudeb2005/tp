@@ -276,7 +276,8 @@ public class Parser {
         }
 
         start += prefix.length();
-        String[] possible = {"n/", "ic/", "dob/", "g/", "p/", "a/", "dt/", "t/", "dsc/", "h/", "old/", "new/"};
+        // Add prescription-specific prefixes s/, m/, and nt/ to the list of possible prefixes
+        String[] possible = {"n/", "ic/", "dob/", "g/", "p/", "a/", "dt/", "t/", "dsc/", "h/", "old/", "new/", "s/", "m/", "nt/"};
         int end = input.length();
 
         // Determine where the current parameter's detail ends by finding the start of the next parameter
