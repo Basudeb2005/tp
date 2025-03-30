@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class AddPrescriptionCommandTest {
     private ManagementSystem system;
@@ -49,6 +50,11 @@ class AddPrescriptionCommandTest {
         assertEquals("Paracetamol", prescription.getMedicines().get(0));
         assertEquals("Cough syrup", prescription.getMedicines().get(1));
         assertEquals("Take medicine after meals", prescription.getNotes());
+        
+        // Check ID format
+        String expectedIdPattern = patientId + "-\\d+";
+        assertTrue(prescription.getId().matches(expectedIdPattern), 
+                "Prescription ID should be in format 'NRIC-SEQ'");
     }
 
     @Test

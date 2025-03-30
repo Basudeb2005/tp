@@ -8,6 +8,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class PrescriptionTest {
 
@@ -27,7 +28,8 @@ class PrescriptionTest {
         assertEquals(symptoms, prescription.getSymptoms());
         assertEquals(medicines, prescription.getMedicines());
         assertEquals(notes, prescription.getNotes());
-        assertNotNull(prescription.getId());
+        String expectedFormat = patientId + "-" + prescription.getSequenceNumber();
+        assertEquals(expectedFormat, prescription.getId());
         assertNotNull(prescription.getDateTime());
     }
 
@@ -56,11 +58,12 @@ class PrescriptionTest {
         
         // Assert
         assertNotNull(html);
-        assertEquals(true, html.contains("<title>Prescription for John Doe</title>"));
-        assertEquals(true, html.contains("<div><strong>Patient NRIC:</strong> S1234567A</div>"));
-        assertEquals(true, html.contains("<div><strong>Name:</strong> John Doe</div>"));
-        assertEquals(true, html.contains("<li>Fever</li>"));
-        assertEquals(true, html.contains("<li>Paracetamol</li>"));
-        assertEquals(true, html.contains("<div class=\"notes\">Take medicine after meals</div>"));
+        assertTrue(html.contains("<title>Prescription for John Doe</title>"));
+        assertTrue(html.contains("<div><strong>Patient NRIC:</strong> S1234567A</div>"));
+        assertTrue(html.contains("<div><strong>Name:</strong> John Doe</div>"));
+        assertTrue(html.contains("<li>Fever</li>"));
+        assertTrue(html.contains("<li>Paracetamol</li>"));
+        assertTrue(html.contains("<div class=\"notes\">Take medicine after meals</div>"));
+        assertTrue(html.contains("Prescription ID: " + prescription.getId()));
     }
 } 

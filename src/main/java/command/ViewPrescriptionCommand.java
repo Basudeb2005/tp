@@ -23,7 +23,7 @@ public class ViewPrescriptionCommand extends Command {
     /**
      * Constructs a new ViewPrescriptionCommand.
      *
-     * @param prescriptionId The ID of the prescription to view
+     * @param prescriptionId The ID of the prescription to view (format: "NRIC-SEQ")
      */
     public ViewPrescriptionCommand(String prescriptionId) {
         this.prescriptionId = prescriptionId;
@@ -43,6 +43,8 @@ public class ViewPrescriptionCommand extends Command {
             Prescription prescription = system.findPrescriptionById(prescriptionId);
             if (prescription == null) {
                 System.out.println("Prescription with ID " + prescriptionId + " not found.");
+                System.out.println("Prescription IDs now use the format: NRIC-SEQUENCE");
+                System.out.println("Try using view-all-prescriptions NRIC to see all available prescriptions.");
                 ui.showLine();
                 return;
             }
@@ -60,7 +62,7 @@ public class ViewPrescriptionCommand extends Command {
             // Generate HTML file
             String html = prescription.toHtml(patient);
             String folderPath = "prescriptions";
-            String fileName = "prescription_" + prescription.getId() + ".html";
+            String fileName = "prescription_" + prescription.getId().replace("-", "_") + ".html";
             
             try {
                 // Create directory if it doesn't exist

@@ -9,8 +9,8 @@ import java.util.List;
  * Represents a prescription for a patient.
  */
 public class Prescription {
-    private static int runningId = 1000;
-    private final String id;
+    private static int prescriptionCount = 1;
+    private final int sequenceNumber;
     private final String patientId;
     private final LocalDateTime dateTime;
     private final List<String> symptoms;
@@ -33,7 +33,7 @@ public class Prescription {
         assert medicines != null : "Medicines list cannot be null";
         assert notes != null : "Notes cannot be null";
         
-        this.id = "P" + runningId++;
+        this.sequenceNumber = prescriptionCount++;
         this.patientId = patientId;
         this.dateTime = LocalDateTime.now();
         this.symptoms = new ArrayList<>(symptoms);
@@ -42,12 +42,21 @@ public class Prescription {
     }
 
     /**
-     * Gets the unique identifier of this prescription.
+     * Gets the prescription identifier by combining patient ID and sequence number.
      *
-     * @return The prescription ID
+     * @return The prescription ID in format "NRIC-SEQ"
      */
     public String getId() {
-        return id;
+        return patientId + "-" + sequenceNumber;
+    }
+
+    /**
+     * Gets the sequence number of this prescription.
+     *
+     * @return The sequence number
+     */
+    public int getSequenceNumber() {
+        return sequenceNumber;
     }
 
     /**
@@ -131,7 +140,7 @@ public class Prescription {
             .append("<div class=\"prescription\">\n")
             .append("  <div class=\"header\">\n")
             .append("    <h1>Medical Prescription</h1>\n")
-            .append("    <p>Prescription ID: ").append(id).append("</p>\n")
+            .append("    <p>Prescription ID: ").append(getId()).append("</p>\n")
             .append("    <p>Date: ").append(dateTime.format(DATETIME_FORMAT)).append("</p>\n")
             .append("  </div>\n")
             .append("  <div class=\"patient-info\">\n")
@@ -193,7 +202,7 @@ public class Prescription {
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
-        result.append("Prescription [").append(id).append("] (").append(dateTime.format(DATETIME_FORMAT)).append(")\n");
+        result.append("Prescription [").append(getId()).append("] (").append(dateTime.format(DATETIME_FORMAT)).append(")\n");
         result.append("Patient ID: ").append(patientId).append("\n");
         
         result.append("Symptoms: ");
@@ -227,7 +236,7 @@ public class Prescription {
      * @return String formatted for file storage
      */
     public String toFileFormat() {
-        return id + "|" + patientId + "|" + dateTime.format(DATETIME_FORMAT) + "|" 
+        return patientId + "|" + sequenceNumber + "|" + dateTime.format(DATETIME_FORMAT) + "|" 
                 + String.join(",", symptoms) + "|" + String.join(",", medicines) + "|" + notes;
     }
 } 

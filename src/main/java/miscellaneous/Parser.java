@@ -20,6 +20,7 @@ import command.UnmarkAppointmentCommand;
 import command.FindAppointmentCommand;
 import command.AddPrescriptionCommand;
 import command.ViewPrescriptionCommand;
+import command.ViewAllPrescriptionsCommand;
 import exception.InvalidInputFormatException;
 import exception.UnknownCommandException;
 import manager.Appointment;
@@ -76,6 +77,8 @@ public class Parser {
             return new AddPrescriptionCommand(parseAddPrescription(userInput));
         case "view-prescription":
             return new ViewPrescriptionCommand(parseViewPrescription(userInput));
+        case "view-all-prescriptions":
+            return new ViewAllPrescriptionsCommand(parseViewAllPrescriptions(userInput));
         default:
             throw new UnknownCommandException("Unknown command. Please try again.");
         }
@@ -419,6 +422,25 @@ public class Parser {
         }
         
         return prescriptionId;
+    }
+
+    /**
+     * Parses the input string for viewing all prescriptions for a patient.
+     *
+     * @param input The input string
+     * @return The patient ID
+     * @throws InvalidInputFormatException if the input format is invalid
+     */
+    private static String parseViewAllPrescriptions(String input) throws InvalidInputFormatException {
+        String temp = input.replaceFirst("(?i)view-all-prescriptions\\s*", "");
+        String patientId = temp.trim();
+        
+        if (patientId.isEmpty()) {
+            throw new InvalidInputFormatException("Patient ID cannot be empty!" + System.lineSeparator()
+                    + "Please use: view-all-prescriptions PATIENT_NRIC");
+        }
+        
+        return patientId;
     }
 
 }

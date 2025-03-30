@@ -288,7 +288,7 @@ public class ManagementSystem {
     /**
      * Finds a prescription by its ID.
      *
-     * @param prescriptionId The ID of the prescription to find
+     * @param prescriptionId The ID of the prescription to find (format: "NRIC-SEQ")
      * @return The found prescription or null if not found
      */
     public Prescription findPrescriptionById(String prescriptionId) {
