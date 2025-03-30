@@ -1,3 +1,4 @@
+//@@author Basudeb2005
 package command;
 
 import manager.ManagementSystem;
@@ -71,4 +72,5 @@ class AddPrescriptionCommandTest {
         List<Prescription> prescriptions = system.getPrescriptions();
         assertEquals(0, prescriptions.size()); // This should be 0 if properly implemented
     }
-} 
+}
+//@@author 
