@@ -380,28 +380,7 @@ public class Parser {
             notes = "";
         }
 
-        // Parse symptoms and medicines
-        List<String> symptoms = new ArrayList<>();
-        String[] symptomArray = symptomsStr.split(",\\s*");
-        for (String symptom : symptomArray) {
-            if (!symptom.trim().isEmpty()) {
-                symptoms.add(symptom.trim());
-            }
-        }
-
-        List<String> medicines = new ArrayList<>();
-        String[] medicineArray = medicinesStr.split(",\\s*");
-        for (String medicine : medicineArray) {
-            if (!medicine.trim().isEmpty()) {
-                medicines.add(medicine.trim());
-            }
-        }
-
-        if (symptoms.isEmpty() || medicines.isEmpty()) {
-            throw new InvalidInputFormatException("Symptoms and medicines cannot be empty!");
-        }
-
-        return new String[]{patientId.trim(), String.join(",", symptoms), String.join(",", medicines), notes.trim()};
+        return new String[]{patientId.trim(), symptomsStr.trim(), medicinesStr.trim(), notes.trim()};
     }
 
     /**

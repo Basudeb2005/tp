@@ -27,8 +27,27 @@ public class AddPrescriptionCommand extends Command {
      */
     public AddPrescriptionCommand(String[] args) {
         this.patientId = args[0];
-        this.symptoms = new ArrayList<>(Arrays.asList(args[1].split(",")));
-        this.medicines = new ArrayList<>(Arrays.asList(args[2].split(",")));
+        
+        // Parse symptoms with better handling of spaces
+        String[] symptomArray = args[1].split(",");
+        this.symptoms = new ArrayList<>();
+        for (String symptom : symptomArray) {
+            String trimmed = symptom.trim();
+            if (!trimmed.isEmpty()) {
+                this.symptoms.add(trimmed);
+            }
+        }
+        
+        // Parse medicines with better handling of spaces
+        String[] medicineArray = args[2].split(",");
+        this.medicines = new ArrayList<>();
+        for (String medicine : medicineArray) {
+            String trimmed = medicine.trim();
+            if (!trimmed.isEmpty()) {
+                this.medicines.add(trimmed);
+            }
+        }
+        
         this.notes = args[3];
     }
 
