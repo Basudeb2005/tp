@@ -19,6 +19,7 @@ public class ManagementSystem {
         assert loadedAppointments != null : "Appointment list cannot be null";
         appointments = loadedAppointments;
         patients = loadedPatients;
+        prescriptions = new ArrayList<>();
     }
 
     public List<Patient> getPatients() {

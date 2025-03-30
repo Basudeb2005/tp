@@ -4,6 +4,7 @@ package command;
 import manager.ManagementSystem;
 import manager.Patient;
 import manager.Prescription;
+import manager.Appointment;
 import miscellaneous.Ui;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,7 +26,8 @@ class AddPrescriptionCommandTest {
         Patient patient = new Patient(patientId, "John Doe", "1990-01-01", "Male", 
                                       "123 Main St", "98765432", new ArrayList<>());
         patients.add(patient);
-        system = new ManagementSystem(patients);
+        List<Appointment> appointments = new ArrayList<>();
+        system = new ManagementSystem(patients, appointments);
         ui = new Ui();
     }
 
