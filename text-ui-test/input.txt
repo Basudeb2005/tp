@@ -1,0 +1,6 @@
+add-patient n/Jane Smith ic/S9876543B dob/1985-05-15 g/Female p/91234567 a/456 Elm St
+view-patient S9876543B
+add-prescription ic/S9876543B s/Headache,Fever m/Ibuprofen,Paracetamol nt/Take as needed
+view-all-prescriptions S9876543B
+view-prescription S9876543B-1
+bye

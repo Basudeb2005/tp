@@ -1,4 +1,77 @@
-====================================================
-Welcome to Clinic Management v1!
+----------------------------------------------------------------------------------------------------
+Welcome to ClinicEase!
 Type a command, or 'bye' to exit.
-====================================================
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+Added: Jane Smith
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+Patient NRIC: S9876543B
+Name: Jane Smith
+Date of Birth: 1985-05-15
+Gender: Female
+Address: 456 Elm St
+Contact: 91234567
+Medical History: None
+Appointments: None
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+Successfully added prescription:
+Prescription [S9876543B-1] (DATE_TIME)
+Patient ID: S9876543B
+
+Symptoms: 
+- Headache
+- Fever
+
+Medicines: 
+- Ibuprofen
+- Paracetamol
+
+Notes: Take as needed
+
+Prescription has been generated.
+View the prescription for the patient with ID: S9876543B
+and prescription ID: S9876543B-1
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+Prescriptions for patient Jane Smith (S9876543B):
+
+Prescription ID: S9876543B-1
+Date: DATE_TIME
+
+Symptoms:
+- Headache
+- Fever
+
+Medicines:
+- Ibuprofen
+- Paracetamol
+
+Notes: Take as needed
+
+
+Total prescriptions: 1
+Use 'view-prescription PRESCRIPTION_ID' to view details and generate HTML.
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+Prescription details:
+Prescription [S9876543B-1] (DATE_TIME)
+Patient ID: S9876543B
+
+Symptoms: 
+- Headache
+- Fever
+
+Medicines: 
+- Ibuprofen
+- Paracetamol
+
+Notes: Take as needed
+
+Prescription HTML file generated at: PATH_TO_HTML_FILE
+Open this file in a web browser to view and print the prescription.
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+Bye! Hope to see you again soon!
+----------------------------------------------------------------------------------------------------

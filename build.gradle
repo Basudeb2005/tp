@@ -45,3 +45,20 @@ run{
     standardInput = System.in
     enableAssertions = true
 }
+
+// Set Java compatibility version
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
+// Ensure tests are run with Java 11
+tasks.withType(JavaCompile) {
+    options.compilerArgs += '--release'
+    options.compilerArgs += '11'
+}
+
+// Ensure the gradle wrapper is configured for compatibility
+wrapper {
+    gradleVersion = '7.6.2'
+}
