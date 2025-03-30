@@ -1,3 +1,4 @@
+//@@author Basudeb2005
 package command;
 
 import exception.DuplicatePatientIDException;
@@ -85,4 +86,5 @@ public class AddPrescriptionCommand extends Command {
         
         ui.showLine();
     }
-} 
+}
+//@@author 

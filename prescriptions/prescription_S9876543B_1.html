@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Prescription for Jane Smith</title>
+<style>
+body { font-family: Arial, sans-serif; margin: 40px; }
+.prescription { border: 1px solid #ccc; padding: 20px; max-width: 800px; margin: 0 auto; }
+.header { text-align: center; margin-bottom: 20px; }
+.header h1 { color: #2c3e50; }
+.patient-info { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+.patient-info div { padding: 5px; }
+.section { margin-top: 15px; border-top: 1px solid #eee; padding-top: 15px; }
+.section h3 { color: #3498db; }
+ul { padding-left: 20px; }
+.notes { background-color: #f9f9f9; padding: 10px; border-left: 3px solid #3498db; }
+.footer { margin-top: 30px; text-align: center; font-size: 0.9em; color: #7f8c8d; }
+.print-btn { display: block; margin: 20px auto; padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 4px; cursor: pointer; }
+@media print { .print-btn { display: none; } }
+</style>
+<script>
+function printPrescription() {
+  window.print();
+}
+</script>
+</head>
+<body>
+<div class="prescription">
+  <div class="header">
+    <h1>Medical Prescription</h1>
+    <p>Prescription ID: S9876543B-1</p>
+    <p>Date: 2025-03-30 19:36</p>
+  </div>
+  <div class="patient-info">
+    <div><strong>Patient NRIC:</strong> S9876543B</div>
+    <div><strong>Name:</strong> Jane Smith</div>
+    <div><strong>Date of Birth:</strong> 1985-05-15</div>
+    <div><strong>Gender:</strong> Female</div>
+    <div><strong>Contact:</strong> 91234567</div>
+    <div><strong>Address:</strong> 456 Elm St</div>
+  </div>
+  <div class="section">
+    <h3>Symptoms</h3>
+    <ul>
+      <li>High blood sugar</li>
+      <li>Fatigue</li>
+    </ul>
+  </div>
+  <div class="section">
+    <h3>Prescribed Medicines</h3>
+    <ul>
+      <li>Metformin</li>
+      <li>Blood pressure pills</li>
+    </ul>
+  </div>
+  <div class="section">
+    <h3>Additional Notes</h3>
+    <div class="notes">Take with meals</div>
+  </div>
+  <div class="footer">
+    <p>This prescription is valid for 30 days from the date of issue.</p>
+  </div>
+</div>
+<button class="print-btn" onclick="printPrescription()">Print Prescription</button>
+</body>
+</html>

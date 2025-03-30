@@ -1,3 +1,4 @@
+//@@author Basudeb2005
 package manager;
 
 import java.time.LocalDateTime;
@@ -239,4 +240,5 @@ public class Prescription {
         return patientId + "|" + sequenceNumber + "|" + dateTime.format(DATETIME_FORMAT) + "|" 
                 + String.join(",", symptoms) + "|" + String.join(",", medicines) + "|" + notes;
     }
-} 
+}
+//@@author 

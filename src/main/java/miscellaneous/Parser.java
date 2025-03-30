@@ -363,6 +363,7 @@ public class Parser {
      * @param input The input string
      * @return String array containing [patientId, symptomsStr, medicinesStr, notes]
      * @throws InvalidInputFormatException if the input format is invalid
+     * @@author Basudeb2005
      */
     private static String[] parseAddPrescription(String input) throws InvalidInputFormatException {
         String temp = input.replaceFirst("(?i)add-prescription\\s*", "");
@@ -383,6 +384,7 @@ public class Parser {
 
         return new String[]{patientId.trim(), symptomsStr.trim(), medicinesStr.trim(), notes.trim()};
     }
+    //@@author
 
     /**
      * Parses the input string for a view prescription command.
@@ -390,6 +392,7 @@ public class Parser {
      * @param input The input string
      * @return The prescription ID
      * @throws InvalidInputFormatException if the input format is invalid
+     * @@author Basudeb2005
      */
     private static String parseViewPrescription(String input) throws InvalidInputFormatException {
         if (input.length() < 18) {
@@ -403,6 +406,7 @@ public class Parser {
         
         return prescriptionId;
     }
+    //@@author
 
     /**
      * Parses the input string for viewing all prescriptions for a patient.
@@ -410,6 +414,7 @@ public class Parser {
      * @param input The input string
      * @return The patient ID
      * @throws InvalidInputFormatException if the input format is invalid
+     * @@author Basudeb2005
      */
     private static String parseViewAllPrescriptions(String input) throws InvalidInputFormatException {
         String temp = input.replaceFirst("(?i)view-all-prescriptions\\s*", "");
@@ -422,5 +427,6 @@ public class Parser {
         
         return patientId;
     }
+    //@@author
 
 }
